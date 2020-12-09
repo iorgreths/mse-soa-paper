@@ -1,0 +1,67 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\bibliographystyle{IEEEtran}
+
+\title{Microservices: Use of REST and gRPC over SOAP}
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Marcel Gredler}
+\IEEEauthorblockA{\textit{Computer Science} \\
+\textit{FH Technikum Wien}\\
+Vienna, Austria \\
+se19m025@technikum-wien.at}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+}
+
+\maketitle
+
+\begin{abstract}
+
+Since the induction of Web Services into modern applications, their usage has grown. Together with them the general public was first introduced to the use of protocols like the Simple Object Access Protocol (SOAP) and Representational State Transfer (REST).
+
+In more recent years a new trend started emerging in the development of applications, in which the application is split into a set of small services that use a communication protocol to interact with another. This trend is known as the Microservice Architecture and it favors the use of REST, a Message Bus or other stateless communication protocols over SOAP.
+
+This paper gives an overview of the Microservice Architecture, explains why the use of REST is favored over SOAP and how the new gRPC Remote Procedure Calls (gRPC) framework may support them.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+services, rest, grpc, microservices
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Nowadays their exist many different paradigms and architectures that can be used to create applications. One of these architectural styles is the Service Oriented Architecture (SOA), in which the functionality is split between multiple services that may be run locally or be distributed around the network.
+
+One methodology that heavily uses this paradigm and that is in widespread use, are web services \cite{halili2018web}. Within the use of web services applications can benefit by reusing the functionality of already existing other services. Because of this it is possible to reduce the need of rewriting existing functionality into every application. Another benefit is the possibility of sharing information between all such web services. To achieve all these benefits, web services traditionally employ the Simple Object Access Protocol (SOAP) or Representation State Transfer (REST) protocols \cite{halili2018web}.
+
+Another methodology that became widespread between 2010 and 2020 are microservices. Where web services focused on offering a full service to another application or user, microservices are built around the offering and using of capabilities \cite{karmel2016nist}. Each capability is thereby built and offered as its own service and all communication is performed through an Application Programming Interface (API). A set of microservices can therefore build an application or be used to provide capabilities to other applications.
+
+Since microservices are using lightweight protocols \cite{karmel2016nist} to communicate with each other, a protocol like REST is preferred over SOAP. One of the biggest advantages of REST over SOAP is the smaller payload, as SOAP may require the services to exchange ten times more bytes between each other in comparison to REST \cite{halili2018web}. Since microservices are built around capabilities and interaction between each other, a smaller payload allows for better use of the available bandwidth.
+Additionally, changing the provisioning in SOAP may require changes on the clients, whereas REST does not \cite{halili2018web}. This is another important advantage, as microservices are generally designed to be independently deployable \cite{karmel2016nist}, which would be broken, if the deployment of one service requires the deployment of another.
+
+With the from 2015 slowly emerging HTTP/2 standard \cite{rfc7540} another communication framework has been developed: gRPC Remote Procedure Calls (gRPC) \cite{GRPCAuthors2020}. While previously microservices only used REST, this new framework allows for the use of both gRPC and REST to interact with another. The gRPC framework thereby offers the ability to build so called gRPC REST Gateways \cite{grpcrest}. These gateways are proxies for that expose the gRPC capability through REST. This means that other services are able to use them with gRPC - if they so support this too - or use the REST API. The latter is especially useful in networks where HTTP/2 traffic is not yet fully supported, if for example used loadbalancer only support HTTP/1.1 yet.
+
+This paper gives an introduction of the mentioned protocols SOAP, REST and gRPC. Furthermore it explains what microservices are and how the compare to a classical service oriented architecture. Lastly, the document explains the benefit of using HTTP/2 and gRPC in conjunction with a microservice architecture.
+
+To achieve this goal, the paper is structured as follows: Sections 1-3 cover the explanation about SOAP, REST and gRCP respectively. Section 4 is about microservices and their comparison to the service oriented architecture. This is followed by section 5 which contains the benefit of using HTTP/2 and gRPC and REST. And lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
+
+\bibliography{IEEEabrv,literature}
+
+\end{document}
