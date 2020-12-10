@@ -7,3 +7,11 @@ In more recent years a new trend started emerging in the development of applicat
 
 This paper gives an overview of the Microservice Architecture, explains why the use of REST is favored over SOAP and how the new gRPC Remote Procedure Calls (gRPC) framework may support them.
 
+## Input about what should be in the paper
+
+Make sure to have the differences between
+- Microservice
+- Service
+- Web Service
+
+in the Introduction / Beginning of the paper
