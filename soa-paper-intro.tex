@@ -94,8 +94,12 @@ Lastly, HTTP/2 introduces a new feature called server push \cite{rfc7540}. With 
 
 To further highlight these core differences between how HTTP/1.1 and HTTP/2 treat their traffic, table \ref{http2comparison} provides a comparison of the two versions, reiterating the information provided by this section in a compact format.
 
+The claims of performance improvement by use of HTTP/2 instead of HTTP/1 can be validated empirically. Corbel, Stephan and Omnes perform in their paper "HTTP/1.1 pipelining vs HTTP2 in-the-clear: Performance comparison" \cite{7745823} such an empirical study. They compare the time to download web pages by using the same infrastructure and server, with only the protocol version differing in the data-sets. As a result of their study they were able to identify that HTTP/2 truly does perform better than HTTP/1 for downloading content.
+
 \section{gRPC}
 \label{sec:grpc}
+
+
 
 \section{Microservices}
 \label{sec:micros}
