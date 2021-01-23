@@ -86,7 +86,7 @@ abstract = {gRPC is a modern open source high performance RPC framework that can
 author = {gRPC Authors},
 title = {{gRPC}},
 url = {https://grpc.io/},
-urldate = {2020-12-08},
+urldate = {08.12.2020},
 year = {2020}
 }
 @article{wagh2012comparative,
@@ -127,10 +127,80 @@ year = {2017}
 	institution = {Internet Engineering Task Force (IETF)},
 	url = {https://tools.ietf.org/html/rfc7540}
 }
+
 @misc{grpcrest,
-	author = {gRPC Authors},
+	author = {Philips, B and Cary, L},
 	title = {{gRPC with REST and Open APIs}},
 	url = {https://grpc.io/blog/coreos/},
-	urldate = {2020-12-08},
-	year = {2020}
+	urldate = {08.12.2020},
+	year = {2016}
+}
+
+@misc{grpcmotiviation,
+	author = {Ryan, L},
+	title = {{gRPC Motivation and Design Principles}},
+	url = {https://grpc.io/blog/principles/},
+	urldate = {23.01.2021},
+	year = {2015}
+}
+
+@misc{httpArchive,
+	author = {Souders, S},
+	title = {{Report: State of thew Web}},
+	url = {https://httparchive.org/reports/state-of-the-web},
+	urldate = {23.01.2021},
+	year = {2010}
+}
+
+@techreport{rfc8740,
+	author = {Benjamin, D},
+	title = {Using TLS 1.3 with HTTP/2},
+	howpublished = {Internet Requests for Comments},
+	type = {RFC},
+	number = 8740,
+	year = {2020},
+	month = {2},
+	issn = {2070-1721},
+	publisher = {Internet Engineering Task Force (IETF)},
+	institution = {Internet Engineering Task Force (IETF)},
+	url = {https://tools.ietf.org/html/rfc8740}
+}
+
+@misc{httpwgHTTP2,
+	author = {IETF HTTP Working Group},
+	title = {{HTTP/2 Frequently Asked Questions}},
+	url = {https://http2.github.io/faq/},
+	urldate = {23.01.2021},
+	year = {2021}
+}
+
+@inproceedings{7745823,
+	abstract = {The average Web Page size is constantly increasing: it doubled between January 2012 and January 2015 [1]. In such a context the transport of the Internet traffic becomes very challenging. To moderate the impact of the increase of traffic on end-users' Quality of Experience (QoE), the IETF specified the protocol HTTP2, which optimizes the transfer of the HTTP1 protocol. In this paper we provide a comparison of HTTP1 and HTTP2, both in terms of functionalities and in terms of Page Download Time (PDT). As end-to-end encryption is not always required, this comparison is provided in-the-clear. To avoid any bias in the comparison, our measurements are made with the same hardware, the same software and the same transport conditions (multiplexing over a single TCP connection per domain). Based on our measurement, we show that HTTP2 always highlights better performances that HTTP1. More precisely, we observe the HTTP2 PDT remains 15{\%} lower than HTTP1 PDT as the network delay increases. Furthermore, we observe that the ratio of HTTP2 PDT to HTTP1 PDT decreases as the packet loss increases, showing that HTTP2 is more resilient to packet loss than HTTP1.},
+	author = {Corbel, R and Stephan, E and Omnes, N},
+	booktitle = {2016 13th International Conference on New Technologies for Distributed Systems (NOTERE)},
+	doi = {10.1109/NOTERE.2016.7745823},
+	file = {:home/marcel/Downloads/HTTP1vs2.pdf:pdf},
+	issn = {2162-190X},
+	keywords = {Apache,Delays,H2C,HTTP/1.1 pipelining,HTTP1,HTTP2,HTTP2 in-the-clear,Internet,Internet traffic,Nghttp2,Packet loss,Pipeline processing,Protocols,Servers,Web pages,average web page,hypermedia,page download time,performance,quality of experience,transport protocols},
+	pages = {1--6},
+	title = {{HTTP/1.1 pipelining vs HTTP2 in-the-clear: Performance comparison}},
+	year = {2016}
+}
+
+@misc{protoBuffer,
+	author = {Google},
+	title = {{Protocol Buffers}},
+	url = {https://developers.google.com/protocol-buffers},
+	urldate = {23.01.2021},
+	year = {2021}
+}
+
+@article{article,
+	author = {Wagh, Dr. K and Thool, Ravindra},
+	year = {2012},
+	month = {07},
+	pages = {12-16},
+	title = {A Comparative study of SOAP vs REST web services provisioning techniques for mobile host},
+	volume = {2},
+	journal = {Journal of Information Engineering and Applications}
 }
