@@ -169,7 +169,7 @@ As the purpose of this paper is to identify the use of REST and gRPC over SOAP i
 	\label{micro:comparison}
 	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
 		Service Oriented Architecture & Microservice \\\hline
-		Self-contained, monolithic services Small, & Small, decomposed, isolated and independently deployable services Communications\\\hline
+	Self-contained, monolithic services & Small, decomposed, isolated and independently deployable services Communications\\\hline
 		Communications between services occur through an enterprise service bus & Communications between services occur through lightweight, standard communications protocols and interfaces\\\hline
 		Stateful and requires mapping of service dependencies when changes are introduced & Stateless and less fragile when changes are introduced\\\hline
 		Longer start/stop times & Quick start/stop times\\\hline
@@ -182,7 +182,53 @@ Looking at this definition it can be seen that microservice architectures are ba
 \section{Comparison of Protocols}
 \label{sec:comp}
 
-// use the table as basis and compare the three protocols
+\begin{table}[!htbp]
+	\centering
+	\caption{Comparison between SOAP and REST (Wagh \& Thool, 2015)}
+	\label{fig:compSoapRest}
+	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
+		SOAP & REST \\\hline
+		Changing services in SOAP web provisioning often means a complicated code change on the client side. & Changing services in REST web provisioning not requires any change in client side code\\\hline
+		SOAP has heavy payload as compared to REST & REST is definitely lightweight as it is meant for lightweight data transfer over a most commonly known interface, - the URI
+		It\\\hline
+		It requires binary attachment parsing. & It supports all data types directly.\\\hline
+		%SOAP is not a wireless infrastructure friendly. & REST is a wireless infrastructure friendly\\\hline
+		SOAP web services always return XML data. & While REST web services provide flexibility in regards to the type of data returned.\\\hline
+		It consumes more bandwidth because a SOAP response could require more than 10 times as many bytes as compared to REST. & It consumes less bandwidth because it’s response is lightweight.\\\hline
+		SOAP request uses POST and require a complex XML request to be created which makes response-caching difficult. & Restful APIs can be consumed using simple GET requests,
+		intermediate proxy servers /
+		reverse-proxies can cache their response very easily.\\\hline
+		SOAP uses HTTP based APIs refer to APIs that are exposed as one or more HTTP URIs and typical responses are in XML / JSON. Response schemas are custom per object & REST on the other hand adds an element of using standrdized URIs, and also giving importance to the HTTP verb used (i.e. GET / POST / PUT etc)\\\hline
+		Language, platform, and transport agnostic. & Language and platform agnostic\\\hline
+		Designed to handle distributed computing environments. & Assumes a point-to-point communication model—not for distributed computing environment where message may go through one or more intermediaries\\\hline
+		Harder to develop, requires tools. & Much simpler to develop web services than SOAP\\\hline
+		False assumption: SOAP is more secure. SOAP use WS-Security. WS-Security was created because the SOAP specification was transport-independent and no assumptions could be made about the security available on the transport layer. & REST assumes that the transport will be HTTP (or HTTPS) and the security mechanisms that are built-in to the protocol will be available\\\hline
+		%Is the prevailing standard for web services, and hence has better support from other standards (WSDL, WS) and tooling from vendors. & Lack of standards support for security, policy, reliable messaging, etc., so services that have more sophisticated requirements are harder to develop.\\\hline
+	\end{tabular}
+\end{table}
+
+// use of table \ref{fig:compSoapRest} as basis for the three protocols
+
+// use microservice definition and table \ref{micro:comparison} as basis for ms requirements
+
+// I commented the rows that are (based on my opinion) not relevant for our comparison
+
+I would say our arguments should be (as to why microservices use rest):
+\begin{enumerate}
+	\item support of data types
+	\item payload size / bandwith
+	\item deployment frequency: MS is deploy fast and often; the REST where changes are easier is therefore preferred
+	\item point-to-point communication (based on MS definition)
+	\item easier to develop REST than SOAP
+\end{enumerate}
+
+These 5 points are the main points based on what I can find in the tables and definitions. Additionaly, it nicely correlates to my personal experiences to why people prefer REST than SOAP (making me feel that my observation is valid; your opionion please :) )
+
+-> afterwards I would make the observation how gRPC can help / support. For this I would just take the "REST" column of table \ref{fig:compSoapRest} and compare it with a "gRPC" column. And then make some observations based on that.
+
+\section{Conclusion}
+
+We split the heavens and conquer the earth!
 
 \bibliography{IEEEabrv,literature}
 
