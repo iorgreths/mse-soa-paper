@@ -60,19 +60,70 @@ With the from 2015 slowly emerging HTTP/2 standard \cite{rfc7540} another commun
 
 This paper gives an introduction of the mentioned protocols SOAP, REST and gRPC. Furthermore it explains what microservices are and how the compare to a classical service oriented architecture. Lastly, the document explains the benefit of using HTTP/2 and gRPC in conjunction with a microservice architecture.
 
-To achieve this goal, the paper is structured as follows: Sections 1-3 cover the explanation about SOAP, REST and gRCP respectively. Section 4 is about microservices and their comparison to the service oriented architecture. This is followed by section 5 which contains the benefit of using HTTP/2 and gRPC and REST. And lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
+To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap} to \ref{sec:grpc} cover the explanation about SOAP, REST and gRCP respectively. Section \ref{sec:micros} is about microservices and their comparison to the service oriented architecture. This is followed by section \ref{sec:comp} which contains the benefit of using HTTP/2 and gRPC and REST. And lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
 
 \section{SOAP}
+\label{sec:soap}
 
 \section{REST}
 
 \section{HTTP/2}
 
+The state of the web report of the HTTP archive \cite{httpArchive} suggests that between December 2010 and 2020, the amount of kilobytes (KB) required to load a web page increased by about 318 percent. In other words, in 2010 a page consisted of a median 487.9 KB, whereas in 2020 a web page consists of 2042.3 KB. Such an increase in size is a challenge for both the network we use and the protocols our communication is built upon.
+
+HTTP/1.1 tries to solve the problem of increased page sizes by allowing request pipeline and through the use of multiple parallel open connections. While this was a viable approach for many years, an IETF working group published the newer HTTP/2 specification RFC 7540 \cite{rfc7540} in 2015, with an update regarding TLS 1.3 having been published in RFC 8740 \cite{rfc8740}. This new protocol version promises to solve the problems of HTTP/1.1 that prevent it from being more efficient.
+
+Protocol version HTTP/2 moves away from sending text over the web and instead replaces it with binary data. RFC 7540 \cite{rfc7540} and the IETF HTTP working group \cite{httpwgHTTP2} explain this decision through the argument that binary data is more efficient to parse, as it less error prone and does not require to keep traffic of special characters in the data.
+
+Furthermore HTTP/2 reworks the way semantic information is send through the web (see RFC 7540 \cite{rfc7540} for details) with the goal of allowing multiple requests to be sent through the same connection. Based on the documents \cite{rfc7540} \cite{httpwgHTTP2} this decisions has been to make the HTTP/2 protocol more in line with how TCP connections work. For traffic to flow through an TCP connection, a handshake has to be done first between the two participants. In HTTP/1.1 this meant that for each parallel request a newly opened connection had to go through this very handshake again, instead of being able to use the handshake from the first request, overall increasing the overhead a user had to perform to download the content of a page. HTTP/2 on the other hand only opens one TCP connection minimizing this overhead. Additionally, the header of the HTTP/2 protocol itself are compressed while being send through the network, further reducing the size of each message.
+
+Lastly, HTTP/2 introduces a new feature called server push \cite{rfc7540}. With this feature it is possible for a server to push additional information to the clients, based on their previous requests, without having to wait for them to open a request for this data themselves. Though introducing the ability to send "false-positive" data (i.e. data that is not used by the user in the end), this new feature allows the server to provide the user with "future" information without delay (from user perspective), which helps in providing a better user experience.
+
+\begin{table}[!htbp]
+	\centering
+	\caption{HTTP/1.1 VS HTTP/2}
+	\label{http2comparison}
+	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
+		HTTP/1.1 & HTTP/2 \\\hline
+		text-based protocol & binary protocol \\\hline
+		one request per TCP connection & multiple requests per TCP connection \\\hline
+		no header compression & header compression \\\hline
+		only client may request data & client may request data and server may push additional data \\\hline
+	\end{tabular}
+\end{table}
+
+To further highlight these core differences between how HTTP/1.1 and HTTP/2 treat their traffic, table \ref{http2comparison} provides a comparison of the two versions, reiterating the information provided by this section in a compact format.
+
 \section{gRPC}
+\label{sec:grpc}
 
 \section{Microservices}
+\label{sec:micros}
+
+As the purpose of this paper is to identify the use of REST and gRPC over SOAP in microservice architectures, it is necessary to declare the definition that is used for the term microservice. The internet has multiple possible uses of the term microservice and they may vary on the blogs or scientific papers visited. For the purpose of this document, the definition of the national institute of standard and technology (NIST) is used:
+
+"\emph{Microservices: A microservice is a basic element that results from the architectural decomposition of an application’s components into loosely coupled patterns consisting of self-contained services that communicate with each other using a standard communications protocol and a set of well-defined APIs, independent of any vendor, product or technology.}" - NIST \cite{karmel2016nist}
+
+\begin{table}[!htbp]
+	\centering
+	\caption{Comparison of SOA and Microservices (Karmel, Anil
+		Chandramouli, Ramaswamy
+		Iorga, Michaela, 2016)}
+	\label{micro:comparison}
+	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
+		Service Oriented Architecture & Microservice \\\hline
+		Self-contained, monolithic services Small, & Small, decomposed, isolated and independently deployable services Communications\\\hline
+		Communications between services occur through an enterprise service bus & Communications between services occur through lightweight, standard communications protocols and interfaces\\\hline
+		Stateful and requires mapping of service dependencies when changes are introduced & Stateless and less fragile when changes are introduced\\\hline
+		Longer start/stop times & Quick start/stop times\\\hline
+		Built around services & Built around capabilities\\\hline
+	\end{tabular}
+\end{table}
+
+Looking at this definition it can be seen that microservice architectures are based on service oriented architectures, but they drive the decomposition of applications even further. Document "Nist definition of microservices, application containers and system virtual machines" \cite{karmel2016nist} provides us with a comparison between a "standard" SOA and microservice architecture, see table \ref{micro:comparison}. Based on this comparison it can be seen that microservices decompose an application not just into services but into capabilities. These capability services are to be stateless and allow for independent, fast deployments. In section \ref{sec:comp} the paper focuses on how these differences between SOA and microservices have brought about the trend of using REST and gRPC instead of SOAP in microservice architectures.
 
 \section{Comparison of Protocols}
+\label{sec:comp}
 
 // use the table as basis and compare the three protocols
 
