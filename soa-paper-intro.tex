@@ -28,7 +28,7 @@ Vienna, Austria \\
 se19m025@technikum-wien.at}
 \and
 \IEEEauthorblockN{Florencia Cavallin}
-\IEEEauthorblockA{\textit{Software Engineering} \\
+\IEEEauthorblockA{\textit{Computer Science} \\
 \textit{FH Technikum Wien}\\
 Vienna, Austria \\
 se19m501@technikum-wien.at}
@@ -65,7 +65,7 @@ With the from 2015 slowly emerging HTTP/2 standard \cite{rfc7540} another commun
 
 This paper gives an introduction of the mentioned protocols SOAP, REST and gRPC. Furthermore it explains what microservices are and how the compare to a classical service oriented architecture. Lastly, the document explains the benefit of using HTTP/2 and gRPC in conjunction with a microservice architecture.
 
-To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap} to \ref{sec:grpc} cover the explanation about SOAP, REST and gRCP respectively. Section \ref{sec:micros} is about microservices and their comparison to the service oriented architecture. This is followed by section \ref{sec:comp} which contains the benefit of using HTTP/2 and gRPC and REST. And lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
+To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap} to \ref{sec:grpc} cover the explanation about SOAP, REST and gRCP respectively. Section \ref{sec:micros} is about microservices and their comparison to the service oriented architecture. This is followed by sections \ref{sec:comp} and \ref{sec:compgrpc} which contain the benefits of using gRPC and REST. Lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
 
 \section{SOAP}
 \label{sec:soap}
@@ -363,11 +363,11 @@ Generally it is possible to create services based on SOAP and have each of them 
 \section{Comparison of REST and gRPC for Microservices}
 \label{sec:compgrpc}
 
-With section \ref{sec:comp} this paper identifies the reasons as to why REST is used instead of SOAP within microservice architectures. This section compares the recently emerging gRPC protocol with REST to understand how it can be usable in such architectures and why it is gaining relevance in recent years \cite{grpcrest}. For the general comparison of the protocols this paper takes the categories used in table \ref{fig:compSoapRest} and applies them to gRPC and REST. This means that the protocols will be compared based on:
+With section \ref{sec:comp} this paper identifies the reasons as to why REST is used instead of SOAP within microservice architectures. This section on the other hand compares the recently emerging gRPC protocol with REST to understand how it can be incorporated into microservice architectures and if it may replace REST in the future. For the general comparison of the protocols this paper takes the categories used in table \ref{fig:compSoapRest} and applies them to gRPC and REST. This means that the protocols will be compared based on:
 
 \begin{itemize}
 	\item Coupling between services
-	\item Protocol Weight
+	\item Traffic Weight
 	\item Protocol Type
 	\item Supported Formats
 	\item Browser Support
@@ -387,7 +387,7 @@ With section \ref{sec:comp} this paper identifies the reasons as to why REST is 
 		REST & gRPC \\\hline
 		Changes in REST services do not require changes in clients & Changes in gRPC services require the client to use the newest client stub; Changes are not required if a created REST proxy is used\\\hline
 		REST is lightweight and uses the URI and HTTP & gRCP is based on HTTP/2 and uses the URI\\\hline
-		Text-based protocol & Binary protocol\\\hline
+		Text-based protocol & Binary protocol; REST proxy is text-based.\\\hline
 		Supports multiple formats to be used & Supports multiple formats to be used \\\hline
 		Restful APIs can be consumed using simple GET requests & Browser do not yet support the capability to directly consume gRPC \\\hline
 		Caching of responses with proxies & Supports REST reverse proxy, which can be cached\\\hline
@@ -399,25 +399,64 @@ With section \ref{sec:comp} this paper identifies the reasons as to why REST is 
 	\end{tabular}
 \end{table}
 
-Table \ref{fig:compRestGrpc} shows a summary of the answers to these categories (in order of appearance) and can be used as an overview. In the following sections this paper explains the reason behind each of them in detail.
+Table \ref{fig:compRestGrpc} shows a summary of the answers to these categories (in order of appearance) and can be used as an overview. In the following sections this paper explains the reason behind each of them in detail and follows up with the analysis of gRPCs microservice architecture compatibility.
 
 \subsection{Coupling between services}
 
-Within this section REST and gRPC are compared based on the coupling that is introduced between independent services, if they are to use said protocol for communication.
+Should the services use REST as protocol for interaction, than as shown in table \ref{fig:compSoapRest} and explained in section \ref{sec:rest}, the services do not gain any dependency in their code base. A change within consumed services only causes problems if said alteration introduces a breaking change to existing functionality.
 
-Should the services use REST as protocol for interaction, than as shown in table \ref{fig:compSoapRest} and explained in section \ref{sec:rest}, the services do not gain any dependency in their code base. A change within a consumed service only causes problems if said alteration introduces a breaking change to existing functionality.
+If the services are communicating using gRPC on the other hand, than a change to the service API, outside of breaking changes to existing functionality, may require clients to use the newly generated code stubs. The requirement to use code stubs generated by the server in the client creates a dependency between these services. As gRPC is a framework in addition to a protocol, these generated code stubs are always to be used as libraries in the business code and should therefore not require extensive changes to the overall code base.
 
-If the services are communicating using gRPC on the other hand, than a change to the service API, outside of breaking changes to existing functionality, may require clients to use the newly generated code stubs. As gRPC is a framework in addition to a protocol, these generated code stubs are always to be used as libraries in the business code and should not require extensive changes.
-
-\subsection{Protocol Weight}
-
-This sections compares the "weight" of the interfaces of the protocols, as well as the traffic produced in communications using these protocols.
-
-REST itself uses the URI and HTTP verbs to define the API. It is thereby not required to have a design document, nor is there a fixed standard on how these mechanisms are used to define said API. This makes it possible to directly create a services API within any language, using the languages standard mechanisms.
-
-When creating the gRPC interface on the other hand, an IDL documents is to be written that formulates the interaction with the API. While requiring a developer to create an additional file containing the specification, said document can be written using standard text-editors and does not require specialized tools. gRPC achieves this because of the use of Protocol Buffers as the default IDL, see section \ref{sec:grpc}. \newline
+\subsection{Traffic Weight}
 
 In terms of traffic usage gRPC is outperforming REST simply through the fact that it is based on the HTTP/2 specification. Corbel, Stephan and Omnes show in their document "HTTP/1.1 pipelining vs HTTP2 in-the-clear: Performance comparison" \cite{7745823} that HTTP/2 is always performing better than HTTP/1.1 when downloading the data for pages.
+
+\subsection{Protocol Type}
+
+REST is a text-based protocol, see \ref{sec:rest}. gRPC on the other hand is binary protocol, see \ref{sec:grpc}.
+
+\subsection{Supported Formats}
+
+The REST protocol supports multiple formats for use (like JSON or XML), see \ref{sec:rest}. gRPC on the other hand is a binary format and only supports multiple IDL specification formats. While the gRPC protocol only supports binary communication, the rest-proxy created through the gRPC framework is able to support multiple non-binary formats (like JSON or XML). Said rest-proxy provides this functionality through the REST protocol and not gRPC.
+
+\subsection{Browser Support}
+
+As REST is using the URI and HTTP for communication it is possible to perform REST requests through the browser, even it some HTTP verbs may require additional plugins for use. In comparison to this gRPC is not supported through browsers, as they would require stub code created by gRPC server to achieve this.
+
+\subsection{Caching}
+
+REST responses can be cached by proxy server \cite{wagh2012comparative}. Responses from a gRPC server on the other hand cannot be cached. Should caching on intermediary proxies be required, a rest-proxy would have to be used.
+
+\subsection{Complexity of Interface Definition}
+
+REST itself uses the URI and HTTP verbs to define the API. It is thereby not required to have a design document, nor is there a fixed standard on how these mechanisms are used to define said API. This makes it possible to directly create a service API within any language, using the languages standard mechanisms.
+
+When creating the gRPC interface on the other hand, an IDL document is to be written that formulates the interaction with the API. While requiring a developer to create an additional file containing the specification, said document can be written using standard text-editors and does not require specialized tools. gRPC achieves this through the use of Protocol Buffers as the default IDL, see section \ref{sec:grpc}.
+
+\subsection{Technology Dependence}
+
+Both protocols support multiple programming languages, see section \ref{sec:rest} and \cite{grpcmotiviation}. Furthermore they can be deployed on any web-server that supports the language used to implement the service.
+
+\subsection{Communication Model}
+
+REST assumes a point-to-point communication model but supports proxies as intermediaries \cite{wagh2012comparative}. gRPC on the other hand requires the client to open a connection directly with server. Use of a rest-proxy makes the actual client use the REST protocol instead of gRPC for communication and does therefore not support gRPC itself with proxy capabilities.
+
+\subsection{Development Tools and Requirements}
+
+As mentioned in subsection \textit{Complexity of Interface Definition}, both protocols interfaces can be created using default text editors. The only tool requirements that may arise are tied to the programming language that is used to implement the API of a service.
+
+\subsection{Security}
+
+Both protocols do not define explicit security mechanisms. Security of transported information is instead provided through use of the HTTPS scheme.
+
+\subsection{Microservices and gRPC}
+\label{sec:mgrpc}
+
+gRPC suffers the same problem as SOAP when analyzed for microservice compatibility. The protocol is a RPC framework and requires the client to use the stub created by the gRPC server. Therefore the client now has a dependency on the server service and may require changes when the server is changed. This goes against the loose coupling and independent deployment of microservices \cite{karmel2016nist}.
+
+Additionally, gRPC is a binary protocol and does not fully fit with the independent technology requirement of microservices \cite{karmel2016nist}. While it can be argued that it is possible to use the parsed messages in any programming language and that the IDL can be of different formats, the client is only provided with client code and not with the ability to retrieve the server information in different formats, which would be the actual requirement of microservice architectures.
+
+Based on these points it can be said that gRPC will not replace REST in microservice architectures in the near future. It is still possible to introduce gRPC functionality into certain services of the architecture, but this should only be done if a rest-proxy is additionally provided by the gRPC service. This way the architecture continues to be fully compatible with the microservice definition, but still offer the advantages of streaming requests and responses that gRPC has to the clients that require it.
 
 \section{Conclusion}
 
