@@ -71,11 +71,11 @@ To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap
 \label{sec:soap}
 
 SOAP is an XML based and small overhead protocol used for data exchange in distributed and decentralized systems.
-It was developed by Microsoft DevelopMentor, Userland Software, and IBM. The W3C organization has established the specification of SOAP. W3C was founded in 1994 and is supported by several companies worldwide.
+It was developed by Microsoft DevelopMentor, Userland Software, and IBM. The W3C organization has established the specification of SOAP. W3C was founded in 1994 and is supported by several companies worldwide. \cite{SOA-basic-overview-2002}
 
-SOAP supports different styles of information exchange. It supports Remote Procedure Call(RPC) style, which allows request-response processing and message-oriented information exchange, which is useful if you like to exchange business documents or other documents where the sender may not respond immediately.
+SOAP supports different styles of information exchange. It supports Remote Procedure Call(RPC) style, which allows request-response processing and message-oriented information exchange, which is useful if you like to exchange business documents or other documents where the sender may not respond immediately. \cite{SOA-basic-overview-2002}
 
-The Service Web is powered by Web application servers that speak SOAP and deliver information marked up in XML. To invoke a Web Service, the application needs information about the service given by a Web Service Description Language (WSDL) document. The WSDL documents are indexed in searchable Universal Description Discovery and Integration business registers (UDDI) that tell where the Web Services are located. Web services are a way to connect different systems and programs over the Internet, despite differences in a programming language or system implementation.
+The Service Web is powered by Web application servers that speak SOAP and deliver information marked up in XML. To invoke a Web Service, the application needs information about the service given by a Web Service Description Language (WSDL) document. The WSDL documents are indexed in searchable Universal Description Discovery and Integration business registers (UDDI) that tell where the Web Services are located. \cite{SOA-basic-overview-2002} Web services are a way to connect different systems and programs over the Internet, despite differences in a programming language or system implementation.
 
 The SOAP protocol consists of three main items:
 
@@ -108,14 +108,14 @@ A SOAP application receiving a SOAP message processes the message in the followi
 
 All SOAP messages are encoded using XML. A SOAP message is an XML document that consists of a mandatory SOAP envelope, an optional SOAP header, and a mandatory SOAP body. 
 
-Figure 1 shows a SOAP Message Structure representation for a better understanding. This XML document is referred to as a SOAP message for the rest of this specification. The Envelope is the top element of the XML document representing the message. The Header is a generic mechanism for adding features to a SOAP message in a decentralized manner without prior agreement between the communicating parties. 
+Figure 1 shows a SOAP Message Structure representation for a better understanding. This XML document is referred to as a SOAP message for the rest of this specification. The Envelope is the top element of the XML document representing the message. The Header is a generic mechanism for adding features to a SOAP message in a decentralized manner without prior agreement between the communicating parties. \cite{SOA-W3C-2000}
 
-SOAP defines a few attributes that can indicate who should deal with a feature and whether it is optional or mandatory. The Body is a container for mandatory information intended for the ultimate recipient of the message.
+SOAP defines a few attributes that can indicate who should deal with a feature and whether it is optional or mandatory. The Body is a container for mandatory information intended for the ultimate recipient of the message.\cite{SOA-W3C-2000}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.8\linewidth]{soap_message.jpg}
-	\caption{SOAP Message Structure Representation}
+	\caption{SOAP Message Structure Representation (Image downloaded from https://slideplayer.com/slide/3415118/)}
 \end{figure}
 
 \subsection{Advantages of SOAP}
@@ -131,11 +131,11 @@ Too much reliance on HTTP can be a negative aspect, it is limited only to the re
 
 REST is an architectural style created and defined by Roy T. Fielding in his doctoral thesis. His objective was to use REST as a way to communicate the basic concepts underlying the Web. 
 
-It is of great use to understand the definition of a resource, representation, and state. A resource can be anything. A resource may be a physical object or an abstract concept. As long as something is important enough to be referenced as a thing itself, it can be exposed as a resource. A resource is something that can be stored on a computer and represented as a stream of bits. 
+It is of great use to understand the definition of a resource, representation, and state. A resource can be anything. A resource may be a physical object or an abstract concept. As long as something is important enough to be referenced as a thing itself, it can be exposed as a resource. A resource is something that can be stored on a computer and represented as a stream of bits. \cite{Rest-WebServices-2009}
 
 There are two types of state, the resource state (information about a resource) and the application state (information about the path the client has taken through the application).
 
-REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, the generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.
+REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, \cite{Rest-WebServices-2009} the generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.
 
 \subsection{REST constraints}
 
@@ -180,6 +180,11 @@ The server can navigate the links and forms given in the representation. During 
 \subsection{Performance}
 
 The protocol is based on existing standards widely used in Web and requires no additional standards; it uses HTTP protocol in data exchange. It also recommends that the client or intermediaries cache responses that serve as cacheable to eliminate unnecessary interaction for better performance. This makes it competitive in terms of performance, being the only market with these characteristics.
+
+\subsection{Data Types}
+
+When a client request is made via a RESTful API, it transfers a representation of the resource's state to the receiver. This information, or representation, can be delivered in several formats—for example, JSON, HTML, XLT, Python, PHP, or plain text. 
+JSON can be one of the most used because it is language-agnostic and readable by humans and machines.\cite{REST-red-hat}
 
 All of these features make REST a strong and robust protocol for microservices implementation.
 
