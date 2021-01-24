@@ -28,10 +28,10 @@ Vienna, Austria \\
 se19m025@technikum-wien.at}
 \and
 \IEEEauthorblockN{Florencia Cavallin}
-\IEEEauthorblockA{\textit{@Florencia (department)} \\
-\textit{@Florencia (uni)}\\
-@Florencia (city), Argentina \\
-fcavallin@itba.edu.ar}
+\IEEEauthorblockA{\textit{Software Engineering} \\
+\textit{FH Technikum Wien}\\
+Vienna, Austria \\
+se19m501@technikum-wien.at}
 }
 
 \maketitle
@@ -70,7 +70,117 @@ To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap
 \section{SOAP}
 \label{sec:soap}
 
+SOAP is an XML based and small overhead protocol used for data exchange in distributed and decentralized systems.
+It was developed by Microsoft DevelopMentor, Userland Software, and IBM. The W3C organization has established the specification of SOAP. W3C was founded in 1994 and is supported by several companies worldwide.
+
+SOAP supports different styles of information exchange. It supports Remote Procedure Call(RPC) style, which allows request-response processing and message-oriented information exchange, which is useful if you like to exchange business documents or other documents where the sender may not respond immediately.
+
+The Service Web is powered by Web application servers that speak SOAP and deliver information marked up in XML. To invoke a Web Service, the application needs information about the service given by a Web Service Description Language (WSDL) document. The WSDL documents are indexed in searchable Universal Description Discovery and Integration business registers (UDDI) that tell where the Web Services are located. Web services are a way to connect different systems and programs over the Internet, despite differences in a programming language or system implementation.
+
+The SOAP protocol consists of three main items:
+
+\begin{itemize}
+  \item The SOAP envelope: defines an overall framework for expressing what is in a message, who should deal with it, and whether it is optional or mandatory.
+  \item The SOAP encoding rules: define a serialization mechanism that can be used to exchange instances of application-defined datatypes.
+  \item The SOAP RPC representation: defines a convention that can represent remote procedure calls and responses.
+\end{itemize}
+
+
+SOAP can be used in combination with other protocols; however, it is usually used with HTTP.
+
+This protocol was designed to be a more simple and extensible protocol than the ones already existing. Therefore some features that are usually in traditional messaging systems and distributed object systems were excluded, for example, distributed garbage collection, Objects-by-reference, Activation.
+
+\subsection{The SOAP Message Exchange Model}
+
+SOAP are unilateral communications from a transmitter to a receiver, but a system utilizing SOAP messages can also be implemented with a request/response scheme.
+SOAP implementations can be optimized to take advantage of the particularities of the network system it is running on.
+Messages are routed along a message path which allows for processing at one or more intermediate nodes in addition to the ultimate destination.
+A SOAP application receiving a SOAP message processes the message in the following way:
+
+\begin{itemize}
+  \item It identifies all parts of the SOAP message intended for that application.
+  \item Verify that the application supports all mandatory parts identified.
+  \item Process all parts accordingly.
+  \item If the SOAP application is not the ultimate destination, remove all parts identified and forward it.
+\end{itemize}
+
+\subsection{Relation to XML}
+
+All SOAP messages are encoded using XML. A SOAP message is an XML document that consists of a mandatory SOAP envelope, an optional SOAP header, and a mandatory SOAP body. 
+
+Figure 1 shows a SOAP Message Structure representation for a better understanding. This XML document is referred to as a SOAP message for the rest of this specification. The Envelope is the top element of the XML document representing the message. The Header is a generic mechanism for adding features to a SOAP message in a decentralized manner without prior agreement between the communicating parties. 
+
+SOAP defines a few attributes that can indicate who should deal with a feature and whether it is optional or mandatory. The Body is a container for mandatory information intended for the ultimate recipient of the message.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\linewidth]{mse-soa-paper/soap_message.jpg}
+	\caption{SOAP Message Structure Representation}
+\end{figure}
+
+\subsection{Advantages of SOAP}
+
+The fact that it is based on a highly-structured format of XML can be considered a positive aspect because of its language simplicity and portability since no dependencies on the underlying platform are needed. Its Firewall friendliness can also help as the only requirement needed is to post data over HTTP. Open standards are used, which also brings interoperability and universal acceptance since its one of the most widely accepted message communication standards.
+
+\subsection{Disadvantages of SOAP}
+
+Too much reliance on HTTP can be a negative aspect, it is limited only to the request-response model, and HTTP's slow protocol can cause bad performance. It is stateless, making it difficult for transactional and business processing applications and serialization by value and by reference (impossible to refer or point to external data source).
+
 \section{REST}
+
+REST is an architectural style created aby defined by Roy T. Fielding in his doctoral thesis. His objective was to use REST as a way to communicate the basic concepts underlying the Web. 
+
+It is of great use to understand the definition of a resource, representation, and state. A resource can be anything. A resource may be a physical object or an abstract concept. As long as something is important enough to be referenced as a thing itself, it can be exposed as a resource. A resource is something that can be stored on a computer and represented as a stream of bits. 
+
+There are two types of state, the resource state (information about a resource) and the application state (information about the path the client has taken through the application).
+
+REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, the generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.
+
+\subsection{REST constraints}
+
+\begin{itemize}
+  \item Everything is a resource.
+  \item Resource are identified through URIs.
+  \item Uniform interface.
+  \item Manipulation of resources through representations.
+  \item Self-descriptive messages.
+  \item Stateless interactions.
+  \item Hypermedia as the engine of application state.
+\end{itemize}
+
+\subsection{Interfaces}
+
+The most remarkable characteristic of REST is that it exposes the same interfaces to the client. 
+
+The most known implementation of this protocol is with HTTP. It is a state transfer protocol other than a data transport protocol, but HTTP can also uniquely locate a resource and tell us how to operate it. This protocol demands that the requests and responses are performed with an HTTP operation: GET, POST, PUT and DELETE. 
+
+Uniform interface becomes the Babel of interface definition. It helps to decouple between the client and the server and makes the client and the server evolve independently. As long as the interface remains unchanged, the client and the serve can interact normally.
+
+\subsection{Scalability}
+
+Stateless interactions constrain can also enhance the scalability of RESTful architecture. Stateless interactions constrain demands that each client's request should contain all application states necessary to understand that request. None of the state information is kept on the server, and none of it is implied by previous requests, reducing the cost of enlarging the system scale. 
+
+\subsection{Reduce coupling}
+
+The way to handle data format in REST helps reduce coupling between the client and the server. Allowing services to handle multiple data formats means that the client and the service can select appropriate data formats for different data types, such as images, text, and spreadsheets.
+
+\subsection{Security}
+
+The REST security model is straightforward and effective. Everything is abstracted into a resource in REST, and every resource is identified through its unique URI. REST uses the standard verbs of HTTP, and each verb has exact semantics. Setting different permissions for four operations of a resource can make up different security policies. These settings can all be completed on an HTTP firewall. The difficulty of implementing security policy is very low.
+
+\subsection{Addressability}
+
+With addressability, users can describe precisely the information that they want to receive from the service. In REST, URIs should be defined for every resource or resource representation, and they contain all information required to address it.
+
+\subsection{Connectedness}
+
+The server can navigate the links and forms given in the representation. During this process, links play an essential role in connecting resources. This way, service customers can make a path through the application by following the links.
+
+\subsection{Performance}
+
+The protocol is based on existing standards widely used in Web and requires no additional standards; it uses HTTP protocol in data exchange. It also recommends that the client or intermediaries cache responses that serve as cacheable to eliminate unnecessary interaction for better performance. This makes it competitive in terms of performance, being the only market with these characteristics.
+
+All of these features make REST a strong and robust protocol for microservices implementation.
 
 \section{HTTP/2}
 
@@ -218,11 +328,11 @@ I would say our arguments should be (as to why microservices use rest):
 	\item support of data types
 	\item payload size / bandwith
 	\item deployment frequency: MS is deploy fast and often; the REST where changes are easier is therefore preferred
-	\item point-to-point communication (based on MS definition)
+	\item point-to-point communication (based on MS definition) 
 	\item easier to develop REST than SOAP
 \end{enumerate}
 
-These 5 points are the main points based on what I can find in the tables and definitions. Additionaly, it nicely correlates to my personal experiences to why people prefer REST than SOAP (making me feel that my observation is valid; your opionion please :) )
+These 5 points are the main points based on what I can find in the tables and definitions. Additionaly, it nicely correlates to my personal experiences to why people prefer REST than SOAP (making me feel that my observation is valid; your opionion please :) ) (GREAT! I totally agree, I think there is plenty of info on the papers you found, we can look for more tomorrow but those are pretty accurate. I found some terms to describe the REST protocol like Connectedness, Addressability, reduce coupling which I think can be linked to some of the concepts you are describing like point-to-point communication)
 
 -> afterwards I would make the observation how gRPC can help / support. For this I would just take the "REST" column of table \ref{fig:compSoapRest} and compare it with a "gRPC" column. And then make some observations based on that.
 
