@@ -323,11 +323,18 @@ Looking at this definition it can be seen that microservice architectures are ba
 	\end{tabular}
 \end{table}
 
-Based on the information in sections \ref{sec:soap} and \ref{sec:rest} a common understanding of the SOAP and REST protocols is available. With this knowledge it is now possible to understand the comparison between the protocols made by Wagh \& Thool \cite{wagh2012comparative}. The gathered information of their paper is repeated in table \ref{fig:compSoapRest}.
+Sections \ref{sec:soap} and \ref{sec:rest} provide a basic understanding of the SOAP and REST protocol respectively. Together with this knowledge and the comparison of protocols provided by Wagh \& Thool \cite{wagh2012comparative}, shown in table \ref{fig:compSoapRest}, the basis for comparing REST and SOAP on basis of microservices is available.
 
-The second data-set required for the protocol comparison, are the requirements based on which these protocols are compared. For this purpose section \ref{sec:micros} explains that this paper uses the NIST definition \cite{karmel2016nist} for microservices and further backs it with the comparison of SOA and microservices provided by \cite{karmel2016nist} and shown in table \ref{micro:comparison}.
+In addition to the information about the protocols section \ref{sec:micros} provides the definition of microservices. Furthermore the section shows a comparison of requirements between service oriented architectures (SOA) and microservice architectures, as defined in Karmels paper \cite{karmel2016nist}.
 
-Given this information it is possible to identify three categories that speak for the use of REST over SOAP in microservice architectures, these three categories are:
+When comparing the protocols based on the microservice defintion and requirements of an architecture based on them, it becomes obvious the it is required to use a lightweight communication protocol for interaction between services in said architecture. This lightweight protocol refers both to network traffic and the protocol interface.
+
+Another big requirement of microservice architectures is the ability to use them independently from vendors and technology.
+
+Lastly, the deployments of individual services in a microservice architecture are to be independent from each other and require very loose coupling between the services making up the application.
+
+
+Because of these reasons this paper focuses on these three categories when analyzing the protocols and there usability for microservice architecture. These categories will be referred to with the following three names in this paper:
 
 \begin{itemize}
 	\item Independence
@@ -335,30 +342,33 @@ Given this information it is possible to identify three categories that speak fo
 	\item Deployments
 \end{itemize} 
 
-In the following subsections this paper will describe why these categories are required within a microservice architecture and why REST performs better in them than SOAP.
+The analysis for each of the categories is found in the following sections, each section containing the information about what protocol better suits the requirements of it.
 
 \subsection{Independence}
 
-NIST requires microservices to use a standard communication protocol and be independent of technologies \cite{karmel2016nist}. If this requirement is applied to SOAP and REST, then table \ref{fig:compSoapRest} identifies two points that speak for the use of REST.
+NIST requires microservices to use a standard communication protocol and be independent of technologies \cite{karmel2016nist}. If this requirement is applied to SOAP and REST, then table \ref{fig:compSoapRest} identifies one big reason that speaks for the use of REST.
 
-Firstly, SOAP web services always return XML data and do not allow for other formats to be used. REST on the other hand provides a flexibility in the return format. It is possible to only support one arbitrary format (like JSON or XML), but it could also be a service that supports multiple formats and the client can decide which of them they require.
+SOAP services always return XML data and do not allow for other formats to be used. REST on the other hand provides a flexibility in the protocol format. It is possible to only support one arbitrary format (like JSON or XML), but it could also be a service that supports multiple formats and the client can decide which of them they require.
 
-Secondly, as explained in section \ref{sec:soap}, SOAP is a protocol that can return primitive data types as well as reference information. The later causes SOAP to be more directly tied to object oriented language and cause the support SOAP in non-object-oriented to be harder to implement, if not be impossible without using some kinds of workarounds. Since REST on the other hand can be easily implemented in either kind of programming language, the protocol is better suited for use, if viewed from this technology independence view.
+Because of this reason the use of REST is better suited for microservice architectures in terms of independence.
 
 \subsection{Lightweight Communication Protocol}
 
-Microservices communicate through lightweight communication protocols and interfaces \cite{karmel2016nist}.
-On one hand this means that the used protocol should be small in size when transferred through the network and on the other hand this states that the implementation of interfaces should be easy because they are to be small.
+Microservices communicate through lightweight communication protocols and interfaces \cite{karmel2016nist}. On one hand this means that the used protocol should be small in size when transferred through the network and on the other hand this states that the implementation of interfaces should be easy and possible without additional tool requirements.
 
-In terms of payload size the REST protocol is easily the winner in this case. The paper from Wagh \& Thool \cite{wagh2012comparative} emphasizes this point by saying that SOAP has a heavy payload and that REST is definitively lightweight.
+In terms of payload size the REST protocol is easily the winner in this category. The paper from Wagh \& Thool \cite{wagh2012comparative} emphasizes this point by saying that SOAP has a heavy payload and that REST is definitively lightweight, especially in comparison to SOAP.
 
 The lightweight interface can be argued through the development requirements. SOAP is more complicated and requires tool support, while REST can be implemented with standard tools \cite{wagh2012comparative}. If the development of interfaces is hardly possible without tool support than this speaks against the "lightweight" interface requirement demanded by microservices.
+
+It becomes therefore apparent that in terms of lightweight communication protocols REST is the preferred protocol.
 
 \subsection{Deployments}
 
 In a microservice architecture services need to be loosely coupled and have the ability to be deployed independently from each other \cite{karmel2016nist}. If these services would be built using SOAP as their basis for communication, than this would introduce some coupling and inter-dependence between services. This is the result from having to built classes on the client side that are in line with the WSDL of the services. Not only does this introduce
 
 Generally it is possible to create services based on SOAP and have each of them initially deployed independently, the problem is here on the side of future changes. Wagh \& Thool \cite{wagh2012comparative} identified that changes in SOAP based services may require complicated code changes in clients. Since the microservice definition outright speaks against coupling and dependency, it is easy to understand why REST is preferred over SOAP.
+
+As SOAP introduces tighter coupling between services and reduces the independence of service deployments, REST is better suited for microservice architecture when compared based on the deployment category.  
 
 \section{Comparison of REST and gRPC for Microservices}
 \label{sec:compgrpc}
