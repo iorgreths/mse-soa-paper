@@ -228,7 +228,7 @@ The above requirements to the RPC protocol are reflected by the following princi
 \begin{itemize}
 	\item \textbf{Services not objects}: gRPC allows for communication with services and is not object-oriented.
 	\item \textbf{Messages not References}: Client and server exchange messages between them and do not have references to objects.
-	\item \textbf{Interoperability \& Reach}: "The wire protocol must be capable of surviving traversal over common internet infrastructure." \cite{grpcmotiviation}
+	\item \textbf{Interoperability \& Reach}: \textit{"The wire protocol must be capable of surviving traversal over common internet infrastructure."} \cite{grpcmotiviation}
 	\item \textbf{General Purpose}: The framework should be usable with most use-cases.
 	\item \textbf{Performant}: The framework should not perform significantly worse when compared to a framework designed for a specific use-case.
 	\item \textbf{Payload Agnostic}: gRPC needs to supports different message types (protocol buffers, JSON, XML, Thrift) and compression mechanisms.
@@ -287,7 +287,7 @@ As this paper aims to identify the use of REST and gRPC over SOAP in microservic
 		Iorga, Michaela, 2016)}
 	\label{micro:comparison}
 	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
-		Service-Oriented Architecture & Microservice \\\hline
+		Service Oriented Architecture & Microservice \\\hline
 	Self-contained, monolithic services & Small, decomposed, isolated and independently deployable services Communications\\\hline
 		Communications between services occur through an enterprise service bus & Communications between services occur through lightweight, standard communications protocols and interfaces\\\hline
 		Stateful and requires mapping of service dependencies when changes are introduced & Stateless and less fragile when changes are introduced\\\hline
@@ -296,7 +296,7 @@ As this paper aims to identify the use of REST and gRPC over SOAP in microservic
 	\end{tabular}
 \end{table}
 
-Looking at this definition, it can be seen that microservice architectures are based on service-oriented architectures (SOA), but they drive the decomposition of applications even further. Document "Nist definition of microservices, application containers and virtual system machines" \cite{karmel2016nist} provides us with a comparison between a "standard" SOA and a microservice architecture, as can be seen in table \ref{micro:comparison}. Based on this information, microservices decompose an application not just into services but into capabilities. These "capability services," generally just referred to as services, are stateless and allow for independent, fast deployments. In the following section, the paper uses the differences outlined in table \ref{micro:comparison} and the microservice term's definition to analyze the better fitting protocol for a microservice architecture.
+Looking at this definition, it can be seen that microservice architectures are based on service oriented architectures (SOA), but they drive the decomposition of applications even further. Document "Nist definition of microservices, application containers and virtual system machines" \cite{karmel2016nist} provides us with a comparison between a "standard" SOA and a microservice architecture, as can be seen in table \ref{micro:comparison}. Based on this information, microservices decompose an application not just into services but into capabilities. These "capability services," generally just referred to as services, are stateless and allow for independent, fast deployments. In the following section, the paper uses the differences outlined in table \ref{micro:comparison} and the microservice term's definition to analyze the better fitting protocol for a microservice architecture.
 
 \section{Comparison of SOAP and REST for Microservices}
 \label{sec:comp}
