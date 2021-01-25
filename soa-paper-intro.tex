@@ -38,9 +38,9 @@ se19m501@technikum-wien.at}
 
 \begin{abstract}
 
-Since the induction of Web Services into modern applications, their usage has grown. Together with them the general public was first introduced to the use of protocols like the Simple Object Access Protocol (SOAP) and Representational State Transfer (REST).
+Since the induction of Web Services into modern applications, their usage has grown. Together with them, the general public was first introduced to protocols like the Simple Object Access Protocol (SOAP) and Representational State Transfer (REST).
 
-In more recent years a new trend started emerging in the development of applications, in which the application is split into a set of small services that use a communication protocol to interact with another. This trend is known as the Microservice Architecture and it favors the use of REST, a Message Bus or other stateless communication protocols over SOAP.
+In more recent years, a new trend started emerging in the development of applications, in which the application is split into a set of small services that use a communication protocol to interact with another. This trend is known as the Microservice Architecture, and it favors the use of REST, a Message Bus, or other stateless communication protocols over SOAP.
 
 This paper gives an overview of the Microservice Architecture, explains why the use of REST is favored over SOAP and how the new gRPC Remote Procedure Calls (gRPC) framework may support them.
 
@@ -52,20 +52,21 @@ services, rest, grpc, microservices
 
 \section{Introduction}
 
-Nowadays their exist many different paradigms and architectures that can be used to create applications. One of these architectural styles is the Service Oriented Architecture (SOA), in which the functionality is split between multiple services that may be run locally or be distributed around the network.
+Nowadays, there exist many different paradigms and architectures that can be used to create applications. One of these architectural styles is the Service Oriented Architecture (SOA), in which the functionality is split between multiple services that may be run locally or be distributed around the network.
 
-One methodology that heavily uses this paradigm and that is in widespread use, are web services \cite{halili2018web}. Within the use of web services applications can benefit by reusing the functionality of already existing other services. Because of this it is possible to reduce the need of rewriting existing functionality into every application. Another benefit is the possibility of sharing information between all such web services. To achieve all these benefits, web services traditionally employ the Simple Object Access Protocol (SOAP) or Representation State Transfer (REST) protocols \cite{halili2018web}.
+One methodology that heavily uses this paradigm and widespread use is web services \cite{halili2018web}. Using web services, applications can benefit by reusing the functionality of existing other services. Because of this, it is possible to reduce the need to rewrite existing functionality into every application. Another benefit is the possibility of sharing information between all such web services. To achieve all these benefits, web services traditionally employ the Simple Object Access Protocol (SOAP) or Representation State Transfer (REST) protocols \cite{halili2018web}.
 
-Another methodology that became widespread between 2010 and 2020 are microservices. Where web services focused on offering a full service to another application or user, microservices are built around the offering and using of capabilities \cite{karmel2016nist}. Each capability is thereby built and offered as its own service and all communication is performed through an Application Programming Interface (API). A set of microservices can therefore build an application or be used to provide capabilities to other applications.
+Another methodology that became widespread between 2010 and 2020 are microservices. Where web services are focused on offering a full service to another application or user, microservices are built around the offering and using of capabilities \cite{karmel2016nist}. Each capability is built and offered as its service, and all communication is performed through an Application Programming Interface (API). A set of microservices can therefore build an application or be used to provide capabilities to other applications.
 
-Since microservices are using lightweight protocols \cite{karmel2016nist} to communicate with each other, a protocol like REST is preferred over SOAP. One of the biggest advantages of REST over SOAP is the smaller payload, as SOAP may require the services to exchange ten times more bytes between each other in comparison to REST \cite{halili2018web}. Since microservices are built around capabilities and interaction between each other, a smaller payload allows for better use of the available bandwidth.
-Additionally, changing the provisioning in SOAP may require changes on the clients, whereas REST does not \cite{halili2018web}. This is another important advantage, as microservices are generally designed to be independently deployable \cite{karmel2016nist}, which would be broken, if the deployment of one service requires the deployment of another.
 
-With the from 2015 slowly emerging HTTP/2 standard \cite{rfc7540} another communication framework has been developed: gRPC Remote Procedure Calls (gRPC) \cite{GRPCAuthors2020}. While previously microservices only used REST, this new framework allows for the use of both gRPC and REST to interact with another. The gRPC framework thereby offers the ability to build so called gRPC REST Gateways \cite{grpcrest}. These gateways are proxies for that expose the gRPC capability through REST. This means that other services are able to use them with gRPC - if they so support this too - or use the REST API. The latter is especially useful in networks where HTTP/2 traffic is not yet fully supported, if for example used loadbalancer only support HTTP/1.1 yet.
+Since microservices are using lightweight protocols \cite{karmel2016nist} to communicate with each other, a protocol like REST is preferred over SOAP. One of the most significant advantages of REST over SOAP is the smaller payload, as SOAP may require the services to exchange ten times more bytes between each other in comparison to REST \cite{halili2018web}. Since microservices are built around capabilities and interaction between each other, a smaller payload allows for better use of the available bandwidth.
+Additionally, changing the provisioning in SOAP may require changes on the clients, whereas REST does not \cite{halili2018web}. This is another significant advantage, as microservices are generally designed to be independently deployable \cite{karmel2016nist}, which would be broken if one service's deployment requires the deployment of another.
 
-This paper gives an introduction of the mentioned protocols SOAP, REST and gRPC. Furthermore it explains what microservices are and how the compare to a classical service oriented architecture. Lastly, the document explains the benefit of using HTTP/2 and gRPC in conjunction with a microservice architecture.
+With the from 2015 slowly emerging HTTP/2 standard \cite{rfc7540} another communication framework has been developed: gRPC Remote Procedure Calls (gRPC) \cite{GRPCAuthors2020}. While previously microservices only used REST, this new framework allows for both gRPC and REST to interact with one another. The gRPC framework thereby offers the ability to build so-called gRPC REST Gateways \cite{grpcrest}. These gateways are proxies that expose the gRPC capability through REST. This means that other services can use them with gRPC to support this too - or use the REST API. The latter is especially useful in networks where HTTP/2 traffic is not yet fully supported if, for example, the used load balancer only supports HTTP/1.1 yet.
 
-To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap} to \ref{sec:grpc} cover the explanation about SOAP, REST and gRCP respectively. Section \ref{sec:micros} is about microservices and their comparison to the service oriented architecture. This is followed by sections \ref{sec:comp} and \ref{sec:compgrpc} which contain the benefits of using gRPC and REST. Lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
+This paper gives an introduction to the mentioned protocols SOAP, REST, and gRPC. Furthermore, it explains what microservices are and how they compare to a classical service oriented architecture. Lastly, the document explains the benefit of using HTTP/2 and gRPC in conjunction with a microservice architecture.
+
+To achieve this goal, the paper is structured as follows: Sections \ref{sec:soap} to \ref{sec:grpc} cover the explanation about SOAP, REST, and gRCP, respectively. Section \ref{sec:micros} is about microservices and their comparison to the service-oriented architecture. This is followed by sections \ref{sec:comp} and \ref{sec:compgrpc} which contain the benefits of using gRPC and REST. Lastly, the document finished by providing a conclusion about the use of gRPC and REST in microservices.
 
 \section{SOAP}
 \label{sec:soap}
@@ -190,15 +191,15 @@ All of these features make REST a strong and robust protocol for microservices i
 
 \section{HTTP/2}
 
-The state of the web report of the HTTP archive \cite{httpArchive} suggests that between December 2010 and 2020, the amount of kilobytes (KB) required to load a web page increased by about 318 percent. In other words, in 2010 a page consisted of a median 487.9 KB, whereas in 2020 a web page consists of 2042.3 KB. Such an increase in size is a challenge for both the network we use and the protocols our communication is built upon.
+The state of the web report of the HTTP archive \cite{httpArchive} suggests that between December 2010 and 2020, the number of kilobytes (KB) required to load a web page increased about 318 percent. In other words, in 2010, a page consisted of a median of 487.9 KB, whereas in 2020, a web page consists of 2042.3 KB. Such an increase in size is a challenge for both the network we use and the protocols our communication is built upon.
 
-HTTP/1.1 tries to solve the problem of increased page sizes by allowing request pipeline and through the use of multiple parallel open connections. While this was a viable approach for many years, an IETF working group published the newer HTTP/2 specification RFC 7540 \cite{rfc7540} in 2015, with an update regarding TLS 1.3 having been published in RFC 8740 \cite{rfc8740}. This new protocol version promises to solve the problems of HTTP/1.1 that prevent it from being more efficient.
+HTTP/1.1 tries to solve the problem of increased page sizes by allowing a request pipeline and multiple parallel open connections. While this was a viable approach for many years, an IETF working group published the newer HTTP/2 specification RFC 7540 \cite{rfc7540} in 2015, with an update regarding TLS 1.3 having been published in RFC 8740 \cite{rfc8740}. This new protocol version promises to solve the problems of HTTP/1.1 that prevent it from being more efficient.
 
-Protocol version HTTP/2 moves away from sending text over the web and instead replaces it with binary data. RFC 7540 \cite{rfc7540} and the IETF HTTP working group \cite{httpwgHTTP2} explain this decision through the argument that binary data is more efficient to parse, as it less error prone and does not require to keep traffic of special characters in the data.
+Protocol version HTTP/2 moves away from sending text over the web and instead replaces it with binary data. RFC 7540 \cite{rfc7540}, and the IETF HTTP working group \cite{httpwgHTTP2} explain this decision through the argument that binary data is more efficient to parse, as it less error is prone and does not require to keep traffic of special characters in the data.
 
-Furthermore HTTP/2 reworks the way semantic information is send through the web (see RFC 7540 \cite{rfc7540} for details) with the goal of allowing multiple requests to be sent through the same connection. Based on the documents \cite{rfc7540} \cite{httpwgHTTP2} this decisions has been to make the HTTP/2 protocol more in line with how TCP connections work. For traffic to flow through an TCP connection, a handshake has to be done first between the two participants. In HTTP/1.1 this meant that for each parallel request a newly opened connection had to go through this very handshake again, instead of being able to use the handshake from the first request, overall increasing the overhead a user had to perform to download the content of a page. HTTP/2 on the other hand only opens one TCP connection minimizing this overhead. Additionally, the header of the HTTP/2 protocol itself are compressed while being send through the network, further reducing the size of each message.
+Furthermore, HTTP/2 reworks the way semantic information is sent through the web (see RFC 7540 \cite{rfc7540} for details) to allow multiple requests to be sent through the same connection. Based on the documents \cite{rfc7540} \cite{httpwgHTTP2} this decisions has been to make the HTTP/2 protocol more in line with how TCP connections work. For traffic to flow through a TCP connection, a handshake must be done first between the two participants. In HTTP/1.1, this meant that for each parallel request, a newly opened connection had to go through this same handshake again, instead of being able to use the handshake from the first request, overall increasing the overhead a user had to perform to download the content of a page. HTTP/2, on the other hand, only opens one TCP connection minimizing this overhead. Additionally, the header of the HTTP/2 protocol itself is compressed while being sent through the network, further reducing each message's size.
 
-Lastly, HTTP/2 introduces a new feature called server push \cite{rfc7540}. With this feature it is possible for a server to push additional information to the clients, based on their previous requests, without having to wait for them to open a request for this data themselves. Though introducing the ability to send "false-positive" data (i.e. data that is not used by the user in the end), this new feature allows the server to provide the user with "future" information without delay (from user perspective), which helps in providing a better user experience.
+Lastly, HTTP/2 introduces a new feature called server push \cite{rfc7540}. With this feature, a server can push additional information to the clients, based on their previous requests, without waiting for them to open a request for this data themselves. Though introducing the ability to send "false-positive" data (i.e., data that is not used by the user in the end), this new feature allows the server to provide the user with "future" information without delay (from a user perspective), which helps in providing a better user experience.
 
 \begin{table}[!htbp]
 	\centering
@@ -215,23 +216,23 @@ Lastly, HTTP/2 introduces a new feature called server push \cite{rfc7540}. With 
 
 To further highlight these core differences between how HTTP/1.1 and HTTP/2 treat their traffic, table \ref{http2comparison} provides a comparison of the two versions, reiterating the information provided by this section in a compact format.
 
-The claims of performance improvement by use of HTTP/2 instead of HTTP/1 can be validated empirically. Corbel, Stephan and Omnes perform in their paper "HTTP/1.1 pipelining vs HTTP2 in-the-clear: Performance comparison" \cite{7745823} such an empirical study. They compare the time to download web pages by using the same infrastructure and server, with only the protocol version differing in the data-sets. As a result of their study they were able to identify that HTTP/2 truly does perform better than HTTP/1 for downloading content.
+The claims of performance improvement by use of HTTP/2 instead of HTTP/1 can be validated empirically. Corbel, Stephan, and Omnes perform in their paper "HTTP/1.1 pipelining vs. HTTP2 in-the-clear: Performance comparison" \cite{7745823} such an empirical study. They compare the time to download web pages using the same infrastructure and server, with only the protocol version differing in the data-sets. As a result of their study, they were able to identify that HTTP/2 indeed does perform better than HTTP/1 for downloading content.
 
 \section{gRPC}
 \label{sec:grpc}
 
-The gRPC Remote Procedure Calls (gRPC) framework \cite{GRPCAuthors2020} is a technology initially developed by Google and since having been become an open source framework maintained by the Cloud Native Computing Foundation (CNCF). It is a remote procedure call (RPC) framework that has been developed in modern times (beginning with 2015) and is backed by the HTTP/2 protocol. It has been created with the idea of a general purpose RPC infrastructure and microservice architectures in mind. This means that the created RPC framework was required to be language agnostic and allow for the fast and responsive intercommunication between a multitude of service instances.
+The gRPC Remote Procedure Calls (gRPC) framework \cite{GRPCAuthors2020} is a technology initially developed by Google and since having been become an open-source framework maintained by the Cloud Native Computing Foundation (CNCF). It is a remote procedure call (RPC) framework that has been developed in modern times (beginning with 2015) and is backed by the HTTP/2 protocol. It has been created with the idea of a general-purpose RPC infrastructure and microservice architectures in mind. This means that the created RPC framework was required to be language agnostic and allow for the fast and responsive intercommunication between many service instances.
 
-Above requirements to the RPC protocol are reflected by the following principles of the gRPC design specification \cite{grpcmotiviation}:
+The above requirements to the RPC protocol are reflected by the following principles of the gRPC design specification \cite{grpcmotiviation}:
 
 \begin{itemize}
-	\item \textbf{Services not objects}: gRPC allows for the communication with services and is not an object oriented.
+	\item \textbf{Services not objects}: gRPC allows for communication with services and is not object-oriented.
 	\item \textbf{Messages not References}: Client and server exchange messages between them and do not have references to objects.
 	\item \textbf{Interoperability \& Reach}: "The wire protocol must be capable of surviving traversal over common internet infrastructure." \cite{grpcmotiviation}
 	\item \textbf{General Purpose}: The framework should be usable with most use-cases.
 	\item \textbf{Performant}: The framework should not perform significantly worse when compared to a framework designed for a specific use-case.
-	\item \textbf{Payload Agnostic}: gRPC needs to supports different message types (protcol buffers, JSON, XML, Thrift) and compression mechanisms.
-	\item \textbf{Streaming}: The framework allows for server responses and clients requests to be send in a stream.
+	\item \textbf{Payload Agnostic}: gRPC needs to supports different message types (protocol buffers, JSON, XML, Thrift) and compression mechanisms.
+	\item \textbf{Streaming}: The framework allows for server responses and clients requests to be sent in a stream.
 	\item \textbf{Blocking}: gRPC supports synchronous communication.
 	\item \textbf{Non-Blocking}: gRPC supports asynchronous communication.
 \end{itemize}
@@ -243,11 +244,11 @@ Above requirements to the RPC protocol are reflected by the following principles
 	\label{fig:grpcuse}
 \end{figure}
 
-As with other RPC frameworks, gRPC allows the client to perform operations as if they were run on the client machine. For this the client needs to be aware of method definition and location of the remote server. To describe these methods gRPC uses protocol buffers \cite{protoBuffer} as the default interface description language (IDL), but it is possible to use other formats (like JSON) through the use of gRPC extensions. The communication with remote server itself is left to the underlying HTTP/2 protocol. 
+As with other RPC frameworks, gRPC allows the client to perform operations as if they were run on the client machine. For this, the client needs to be aware of the method definition and location of the remote server. To describe these methods, gRPC uses protocol buffers \cite{protoBuffer} as the default interface description language (IDL), but it is possible to use other formats (like JSON) through the use of gRPC extensions. The communication with the remote server itself is left to the underlying HTTP/2 protocol. 
 
-"Protocol buffers" is a format developed by Google and used to serialize and deserialize structured data, similar to XML. Google describes this format thereby as "think XML, but smaller, faster and simpler" \cite{protoBuffer}. In other words, protocol buffers are a format for structured data, used for the serialization of data and designed to allow the specification of said serialization without a need for additional tooling.
+"Protocol buffers" is a format developed by Google and used to serialize and deserialize structured data, similar to XML. Google describes this format as "think XML, but smaller, faster and simpler" \cite{protoBuffer}. In other words, protocol buffers are a format for structured data, used for the serialization of data and designed to allow the specification of said serialization without a need for additional tooling.
 
-A high-level abstraction of the gRCP intercommunication is shown in figure \ref{fig:grpcuse}. Within this image the gRPC server is written using C++ code. But because of the language agnostic design of gRPC an android phone with a Java client is able to communicate with this server the same way a ruby client is able to.
+A high-level abstraction of the gRCP intercommunication is shown in figure \ref{fig:grpcuse}. Within this image, the gRPC server is written using C++ code. Nevertheless, because of the language-agnostic design of gRPC, an android phone with a Java client can communicate with this server the same way a ruby client can.
 
 \begin{lstlisting}[name={Small sample proto buffer specification (Full example available at https://grpc.io/blog/coreos/)},label={code:grpcproto}]  % Start your code-block
 
@@ -268,16 +269,16 @@ service EchoService {
 	\label{fig:restProxy}
 \end{figure}
 
-Though gRPC has many advantages in its favor, the framework has the problem that it is requiring the HTTP/2 streaming functionality and the protocol HTTP/2 itself to work. As HTTP/2 is still relatively new not all companies have their infrastructure supporting HTTP/2. As a backwards compatibility to HTTP/1.1 and for general automation support (i.e. no need to import and use stub code) gRPC IDL information can be enhanced with REST options, as shown in listing \ref{code:grpcproto}. These changes will cause the compilation of the IDL to create a rest-proxy in addition to the actual gRPC server. When a client now wants to communicate through REST it may talk with the rest-proxy, which in turn will forward the requests through gRPC to the actual gRCP server. Figure \ref{fig:restProxy} illustrates this communication path and highlights how the created service components are based on the same IDL specification.
+Though gRPC has many advantages in its favor, the framework has the problem that it requires the HTTP/2 streaming functionality and the protocol HTTP/2 itself to work. As HTTP/2 is still relatively new, not all companies have their infrastructure supporting HTTP/2. As backward compatibility to HTTP/1.1 and for general automation support (i.e., no need to import and use stub code), gRPC IDL information can be enhanced with REST options, as shown in listing \ref{code:grpcproto}. These changes will cause the IDL compilation to create a rest-proxy in addition to the actual gRPC server. When a client now wants to communicate through REST, it may talk with the rest-proxy, which will forward the requests through gRPC to the actual gRCP server. Figure \ref{fig:restProxy} illustrates this communication path and highlights how the created service components are based on the same IDL specification.
 
-As previously mentioned, this makes it possible to have gRPC server and services running within an HTTP/1.1 infrastructure. By HTTP/1.1 infrastructure is hereby meant that not all network components within the infrastructure support the HTTP/2 protocol and have the connections fall back to HTTP/1.1 when trying to communicate through them. Such components could be router, loadbalancer or even the web-server itself. This support makes it possible to introduce new HTTP/2 gRPC services into existing infrastructure and continue using REST with HTTP/1.1 until the network is ready for gRPC. With this any business is able to already start developing gRPC services and start using them to their full potential as soon as their infrastructure becomes ready.
+As previously mentioned, this makes it possible to have a gRPC server and services running within an HTTP/1.1 infrastructure. By HTTP/1.1, infrastructure is hereby meant that not all network components within the infrastructure support the HTTP/2 protocol and have the connections fall back to HTTP/1.1 when trying to communicate through them. Such components could be a router, load balancer, or even the web-server itself. This support makes it possible to introduce new HTTP/2 gRPC services into existing infrastructure and continue using REST with HTTP/1.1 until the network is ready for gRPC. With this, any business can start developing gRPC services and start using them to their full potential as soon as their infrastructure becomes ready.
 
 \section{Microservices}
 \label{sec:micros}
 
-As the purpose of this paper is to identify the use of REST and gRPC over SOAP in microservice architectures it is necessary to declare the definition that is used for the term microservice. The internet has multiple definition for the term microservice and they may vary on blogs or scientific papers. For the purpose of this document the definition of the national institute of standard and technology (NIST) is used:
+As this paper aims to identify the use of REST and gRPC over SOAP in microservice architectures, it is necessary to declare the definition that is used for the term microservice. The internet has multiple definitions for the term microservice, and they may vary on blogs or scientific papers. For this document, the definition of the national institute of standard and technology (NIST) is used:
 
-"\emph{Microservices: A microservice is a basic element that results from the architectural decomposition of an application’s components into loosely coupled patterns consisting of self-contained services that communicate with each other using a standard communications protocol and a set of well-defined APIs, independent of any vendor, product or technology.}" - NIST \cite{karmel2016nist}
+"\emph{Microservices: A microservice is a basic element that results from the architectural decomposition of an application's components into loosely coupled patterns consisting of self-contained services that communicate with each other using a standard communications protocol and a set of well-defined APIs, independent of any vendor, product or technology.}" - NIST \cite{karmel2016nist}
 
 \begin{table}[!htbp]
 	\centering
@@ -286,7 +287,7 @@ As the purpose of this paper is to identify the use of REST and gRPC over SOAP i
 		Iorga, Michaela, 2016)}
 	\label{micro:comparison}
 	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
-		Service Oriented Architecture & Microservice \\\hline
+		Service-Oriented Architecture & Microservice \\\hline
 	Self-contained, monolithic services & Small, decomposed, isolated and independently deployable services Communications\\\hline
 		Communications between services occur through an enterprise service bus & Communications between services occur through lightweight, standard communications protocols and interfaces\\\hline
 		Stateful and requires mapping of service dependencies when changes are introduced & Stateless and less fragile when changes are introduced\\\hline
@@ -295,7 +296,7 @@ As the purpose of this paper is to identify the use of REST and gRPC over SOAP i
 	\end{tabular}
 \end{table}
 
-Looking at this definition it can be seen that microservice architectures are based on service oriented architectures (SOA) but they drive the decomposition of applications even further. Document "Nist definition of microservices, application containers and system virtual machines" \cite{karmel2016nist} provides us with a comparison between a "standard" SOA and a microservice architecture, as can be seen in table \ref{micro:comparison}. Based on this information, microservices decompose an application not just into services but into capabilities. These "capability services", generally just referred to as services, are to be stateless and allow for independent, fast deployments. In the following section the paper uses the differences outlined in table \ref{micro:comparison} and the definition of the microservice term to analyze the better fitting protocol for a microservice architecture.
+Looking at this definition, it can be seen that microservice architectures are based on service-oriented architectures (SOA), but they drive the decomposition of applications even further. Document "Nist definition of microservices, application containers and virtual system machines" \cite{karmel2016nist} provides us with a comparison between a "standard" SOA and a microservice architecture, as can be seen in table \ref{micro:comparison}. Based on this information, microservices decompose an application not just into services but into capabilities. These "capability services," generally just referred to as services, are stateless and allow for independent, fast deployments. In the following section, the paper uses the differences outlined in table \ref{micro:comparison} and the microservice term's definition to analyze the better fitting protocol for a microservice architecture.
 
 \section{Comparison of SOAP and REST for Microservices}
 \label{sec:comp}
@@ -306,37 +307,36 @@ Looking at this definition it can be seen that microservice architectures are ba
 	\label{fig:compSoapRest}
 	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
 		SOAP & REST \\\hline
-		Changing services in SOAP web provisioning often means a complicated code change on the client side. & Changing services in REST web provisioning not requires any change in client side code\\\hline
-		SOAP has heavy payload as compared to REST & REST is definitely lightweight as it is meant for lightweight data transfer over a most commonly known interface, - the URI
+		Changing services in SOAP web provisioning often means a complicated code change on the client-side. & Changing services in REST web provisioning not requires any change in client-side code\\\hline
+		SOAP has a heavy payload as compared to REST & REST is lightweight as it is meant for lightweight data transfer over a most commonly known interface - the URI
 		It\\\hline
 		It requires binary attachment parsing. & It supports all data types directly.\\\hline
-		%SOAP is not a wireless infrastructure friendly. & REST is a wireless infrastructure friendly\\\hline
+		%SOAP is not wireless infrastructure friendly. & REST is a wireless infrastructure friendly\\\hline
 		SOAP web services always return XML data. & While REST web services provide flexibility in regards to the type of data returned.\\\hline
-		It consumes more bandwidth because a SOAP response could require more than 10 times as many bytes as compared to REST. & It consumes less bandwidth because it’s response is lightweight.\\\hline
-		SOAP request uses POST and require a complex XML request to be created which makes response-caching difficult. & Restful APIs can be consumed using simple GET requests,
+		It consumes more bandwidth because a SOAP response could require more than ten times as many bytes as REST. & It consumes less bandwidth because it is responsible is lightweight.\\\hline
+		SOAP request uses POST and requires a complex XML request to be created, which makes response-caching difficult. & Restful APIs can be consumed using simple GET requests,
 		intermediate proxy servers /
 		reverse-proxies can cache their response very easily.\\\hline
-		SOAP uses HTTP based APIs refer to APIs that are exposed as one or more HTTP URIs and typical responses are in XML / JSON. Response schemas are custom per object & REST on the other hand adds an element of using standrdized URIs, and also giving importance to the HTTP verb used (i.e. GET / POST / PUT etc)\\\hline
+		SOAP uses HTTP based APIs refer to APIs that are exposed as one or more HTTP URIs, and typical responses are in XML / JSON. Response schemas are custom per object & REST, on the other hand, adds an element of using standardized URIs and also giving importance to the HTTP verb used (i.e., GET / POST / PUT, etc.)\\\hline
 		Language, platform, and transport agnostic. & Language and platform agnostic\\\hline
-		Designed to handle distributed computing environments. & Assumes a point-to-point communication model; not for distributed computing environment where message may go through one or more intermediaries\\\hline
-		Harder to develop, requires tools. & Much simpler to develop web services than SOAP\\\hline
-		False assumption: SOAP is more secure. SOAP use WS-Security. WS-Security was created because the SOAP specification was transport-independent and no assumptions could be made about the security available on the transport layer. & REST assumes that the transport will be HTTP (or HTTPS) and the security mechanisms that are built-in to the protocol will be available\\\hline
-		%Is the prevailing standard for web services, and hence has better support from other standards (WSDL, WS) and tooling from vendors. & Lack of standards support for security, policy, reliable messaging, etc., so services that have more sophisticated requirements are harder to develop.\\\hline
+		Designed to handle distributed computing environments. & Assumes a point-to-point communication model; not for distributed computing environment where the message may go through one or more intermediaries\\\hline
+		Harder to develop requires tools. & Much simpler to develop web services than SOAP\\\hline
+		False assumption: SOAP is more secure. SOAP use WS-Security. WS-Security was created because the SOAP specification was transport-independent, and no assumptions could be made about the security available on the transport layer. & REST assumes that the transport will be HTTP (or HTTPS) and the security mechanisms that are built-in to the protocol will be available\\\hline
+		%Is the prevailing standard for web services and hence has better support from other standards (WSDL, WS) and tools from vendors. & Lack of standards supports security, policy, reliable messaging, etc., so services with more sophisticated requirements are harder to develop.\\\hline
 	\end{tabular}
 \end{table}
 
-Sections \ref{sec:soap} and \ref{sec:rest} provide a basic understanding of the SOAP and REST protocol respectively. Together with this knowledge and the comparison of protocols provided by Wagh \& Thool \cite{wagh2012comparative}, shown in table \ref{fig:compSoapRest}, the basis for comparing REST and SOAP on basis of microservices is available.
+Sections \ref{sec:soap} and \ref{sec:rest} provide a basic understanding of the SOAP and REST protocol respectively. Together with this knowledge and the comparison of protocols provided by Wagh \& Thool \cite{wagh2012comparative}, shown in table \ref{fig:compSoapRest}, the basis for comparing REST and SOAP-based on microservices is available.
 
-In addition to the information about the protocols section \ref{sec:micros} provides the definition of microservices. Furthermore the section shows a comparison of requirements between service oriented architectures (SOA) and microservice architectures, as defined in Karmels paper \cite{karmel2016nist}.
+In addition to the information about the protocols section, \ref{sec:micros} defines microservices. Furthermore, the section shows a comparison of requirements between service oriented architectures (SOA) and microservice architectures, as defined in Karmel's paper \cite{karmel2016nist}.
 
-When comparing the protocols based on the microservice defintion and requirements of an architecture based on them, it becomes obvious the it is required to use a lightweight communication protocol for interaction between services in said architecture. This lightweight protocol refers both to network traffic and the protocol interface.
+When comparing the protocols based on the microservice definition and requirements of an architecture based on them, it becomes apparent it is required to use a lightweight communication protocol for interaction between services in said architecture. This lightweight protocol refers both to network traffic and the protocol interface.
 
-Another big requirement of microservice architectures is the ability to use them independently from vendors and technology.
+Another essential requirement of microservice architectures is the ability to use them independently from vendors and technology.
 
-Lastly, the deployments of individual services in a microservice architecture are to be independent from each other and require very loose coupling between the services making up the application.
+Lastly, the deployments of individual services in a microservice architecture are independent of each other and require a very loose coupling between the services making up the application.
 
-
-Because of these reasons this paper focuses on these three categories when analyzing the protocols and there usability for microservice architecture. These categories will be referred to with the following three names in this paper:
+Thus, this paper focuses on these three categories when analyzing the protocols and their usability for microservice architecture. These categories will be referred to with the following three names in this paper:
 
 \begin{itemize}
 	\item Independence
@@ -344,38 +344,38 @@ Because of these reasons this paper focuses on these three categories when analy
 	\item Deployments
 \end{itemize} 
 
-The analysis for each of the categories is found in the following sections, each section containing the information about what protocol better suits the requirements of it.
+The analysis for each category is found in the following sections; each section contains information about what protocol better suits its requirements.
 
 \subsection{Independence}
 
 NIST requires microservices to use a standard communication protocol and be independent of technologies \cite{karmel2016nist}. If this requirement is applied to SOAP and REST, then table \ref{fig:compSoapRest} identifies one big reason that speaks for the use of REST.
 
-SOAP services always return XML data and do not allow for other formats to be used. REST on the other hand provides a flexibility in the protocol format. It is possible to only support one arbitrary format (like JSON or XML), but it could also be a service that supports multiple formats and the client can decide which of them they require.
+SOAP services always return XML data and do not allow for other formats to be used. REST, on the other hand, provides flexibility in the protocol format. It is possible only to support one arbitrary format (like JSON or XML), but it could also be a service that supports multiple formats, and the client can decide which of them they require.
 
-Because of this reason the use of REST is better suited for microservice architectures in terms of independence.
+Because of this reason, the use of REST is better suited for microservice architectures in terms of independence.
 
 \subsection{Lightweight Communication Protocol}
 
-Microservices communicate through lightweight communication protocols and interfaces \cite{karmel2016nist}. On one hand this means that the used protocol should be small in size when transferred through the network and on the other hand this states that the implementation of interfaces should be easy and possible without additional tool requirements.
+Microservices communicate through lightweight communication protocols, and interfaces \cite{karmel2016nist}. On the one hand, this means that the used protocol should be small in size when transferred through the network, and on the other hand, this states that the implementation of interfaces should be simple and possible without additional tool requirements.
 
-In terms of payload size the REST protocol is easily the winner in this category. The paper from Wagh \& Thool \cite{wagh2012comparative} emphasizes this point by saying that SOAP has a heavy payload and that REST is definitively lightweight, especially in comparison to SOAP.
+In terms of payload size, the REST protocol is easily the winner in this category. The paper from Wagh \& Thool \cite{wagh2012comparative} emphasizes this point by saying that SOAP has a heavy payload and that REST is definitively lightweight, especially in comparison to SOAP.
 
-The lightweight interface can be argued through the development requirements. SOAP is more complicated and requires tool support, while REST can be implemented with standard tools \cite{wagh2012comparative}. If the development of interfaces is hardly possible without tool support than this speaks against the "lightweight" interface requirement demanded by microservices.
+The lightweight interface can be argued through the development requirements. SOAP is more complicated and requires tool support, while REST can be implemented with standard tools \cite{wagh2012comparative}. If the development of interfaces is hardly possible without tool support, this speaks against the "lightweight" interface requirement by microservices.
 
-It becomes therefore apparent that in terms of lightweight communication protocols REST is the preferred protocol.
+It becomes therefore apparent that in terms of lightweight communication protocols, REST is the preferred protocol.
 
 \subsection{Deployments}
 
-In a microservice architecture services need to be loosely coupled and have the ability to be deployed independently from each other \cite{karmel2016nist}. If these services would be built using SOAP as their basis for communication, than this would introduce some coupling and inter-dependence between services. This is the result from having to built classes on the client side that are in line with the WSDL of the services. Not only does this introduce
+In a microservice architecture, services need to be loosely coupled and can be deployed independently from each other \cite{karmel2016nist}. If these services were built using SOAP as their basis for communication, this would introduce some coupling and inter-dependence between services. This results from having to built classes on the client-side that are in line with the WSDL of the services. Not only does this introduce.
 
-Generally it is possible to create services based on SOAP and have each of them initially deployed independently, the problem is here on the side of future changes. Wagh \& Thool \cite{wagh2012comparative} identified that changes in SOAP based services may require complicated code changes in clients. Since the microservice definition outright speaks against coupling and dependency, it is easy to understand why REST is preferred over SOAP.
+Generally, it is possible to create services based on SOAP and have each of them initially deployed independently; the problem is here on the side of future changes. Wagh \& Thool \cite{wagh2012comparative} identified that changes in SOAP-based services might require complicated code changes in clients. Since the microservice definition outright speaks against coupling and dependency, it is easy to understand why REST is preferred over SOAP.
 
-As SOAP introduces tighter coupling between services and reduces the independence of service deployments, REST is better suited for microservice architecture when compared based on the deployment category.  
+As SOAP introduces tighter coupling between services and reduces service deployments' independence, REST is better suited for microservice architecture compared based on the deployment category. 
 
 \section{Comparison of REST and gRPC for Microservices}
 \label{sec:compgrpc}
 
-With section \ref{sec:comp} this paper identifies the reasons as to why REST is used instead of SOAP within microservice architectures. This section on the other hand compares the recently emerging gRPC protocol with REST to understand how it can be incorporated into microservice architectures and if it may replace REST in the future. For the general comparison of the protocols this paper takes the categories used in table \ref{fig:compSoapRest} and applies them to gRPC and REST. This means that the protocols will be compared based on:
+With section \ref{sec:comp} this paper identifies the reasons as to why REST is used instead of SOAP within microservice architectures. On the other hand, this section compares the recently emerging gRPC protocol with REST to understand how it can be incorporated into microservice architectures and if it may replace REST in the future. For the general comparison of the protocols, this paper takes the categories used in table \ref{fig:compSoapRest} and applies them to gRPC and REST. This means that the protocols will be compared based on: 
 
 \begin{itemize}
 	\item Coupling between services
@@ -392,36 +392,36 @@ With section \ref{sec:comp} this paper identifies the reasons as to why REST is 
 \end{itemize}
 
 \begin{table}[!htbp]
-	\centering
-	\caption{Comparison between REST and gRPC}
-	\label{fig:compRestGrpc}
-	\begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
-		REST & gRPC \\\hline
-		Changes in REST services do not require changes in clients & Changes in gRPC services require the client to use the newest client stub; Changes are not required if a created REST proxy is used\\\hline
-		REST is lightweight and uses the URI and HTTP & gRCP is based on HTTP/2 and uses the URI\\\hline
-		Text-based protocol & Binary protocol; REST proxy is text-based.\\\hline
-		Supports multiple formats to be used & Supports multiple formats to be used \\\hline
-		Restful APIs can be consumed using simple GET requests & Browser do not yet support the capability to directly consume gRPC \\\hline
-		Caching of responses with proxies & Supports REST reverse proxy, which can be cached\\\hline
-		API defined through standardized URIs and HTTP verbs & API is defined through Interface Definition Language (typically Protocol Buffer); The IDL can be enhanced with REST options to automatically create a REST proxy \\\hline
-		Language and platform agnostic & Language and platform agnostic\\\hline
-		Assumes a point-to-point communication model; & Point-to-Point Communication\\\hline
-		Can be developed using Standard Text-Editors & Can be developed using Standard Text-Editors\\\hline
-		Security is provided through use of HTTPS & Security is provided through use of HTTPS\\\hline
-	\end{tabular}
+        \centering
+        \caption{Comparison between REST and gRPC}
+        \label{fig:compRestGrpc}
+        \begin{tabular}{| p{0.4\linewidth} | p{0.4\linewidth}|}\hline
+                REST & gRPC \\\hline
+                Changes in REST services do not require changes in clients & Changes in gRPC services require the client to use the newest client stub; Changes are not required if a created REST proxy is used\\\hline
+                REST is lightweight and uses the URI and HTTP & gRCP is based on HTTP/2 and uses the URI\\\hline
+                Text-based protocol & Binary protocol; REST proxy is text-based.\\\hline
+                Supports multiple formats to be used & Supports multiple formats to be used \\\hline
+                Restful APIs can be consumed using simple GET requests & Browser do not yet support the capability to directly consume gRPC \\\hline
+                Caching of responses with proxies & Supports REST reverse proxy, which can be cached\\\hline
+                API defined through standardized URIs and HTTP verbs & API is defined through Interface Definition Language (typically Protocol Buffer); The IDL can be enhanced with REST options to automatically create a REST proxy \\\hline
+                Language and platform agnostic & Language and platform agnostic\\\hline
+                Assumes a point-to-point communication model; & Point-to-Point Communication\\\hline
+                Can be developed using Standard Text-Editors & Can be developed using Standard Text-Editors\\\hline
+                Security is provided through use of HTTPS & Security is provided through use of HTTPS\\\hline
+        \end{tabular}
 \end{table}
 
-Table \ref{fig:compRestGrpc} shows a summary of the answers to these categories (in order of appearance) and can be used as an overview. In the following sections this paper explains the reason behind each of them in detail and follows up with the analysis of gRPCs microservice architecture compatibility.
+Table \ref{fig:compRestGrpc} shows a summary of the answers to these categories (in order of appearance) and can be used as an overview. In the following sections, this paper explains the reason behind each of them in detail and follows up with the analysis of gRPCs microservice architecture compatibility.
 
 \subsection{Coupling between services}
 
-Should the services use REST as protocol for interaction, than as shown in table \ref{fig:compSoapRest} and explained in section \ref{sec:rest}, the services do not gain any dependency in their code base. A change within consumed services only causes problems if said alteration introduces a breaking change to existing functionality.
+Should the services use REST as a protocol for interaction, then as shown in table \ref{fig:compSoapRest} and explained in section \ref{sec:rest}, the services do not gain any dependency in their codebase. A change within consumed services only causes problems if said alteration introduces a breaking change to existing functionality.
 
-If the services are communicating using gRPC on the other hand, than a change to the service API, outside of breaking changes to existing functionality, may require clients to use the newly generated code stubs. The requirement to use code stubs generated by the server in the client creates a dependency between these services. As gRPC is a framework in addition to a protocol, these generated code stubs are always to be used as libraries in the business code and should therefore not require extensive changes to the overall code base.
+If the services are communicating using gRPC, on the other hand, then a change to the service API, outside of breaking changes to existing functionality, may require clients to use the newly generated code stubs. The requirement to use code stubs generated by the client creates a dependency between these services. As gRPC is a framework in addition to a protocol, these generated code stubs are always to be used as libraries in the business code and should therefore not require extensive changes to the overall codebase.
 
 \subsection{Traffic Weight}
 
-In terms of traffic usage gRPC is outperforming REST simply through the fact that it is based on the HTTP/2 specification. Corbel, Stephan and Omnes show in their document "HTTP/1.1 pipelining vs HTTP2 in-the-clear: Performance comparison" \cite{7745823} that HTTP/2 is always performing better than HTTP/1.1 when downloading the data for pages.
+In terms of traffic usage, gRPC is outperforming REST only because it is based on the HTTP/2 specification. Corbel, Stephan, and Omnes show in their document "HTTP/1.1 pipelining vs. HTTP2 in-the-clear: Performance comparison" \cite{7745823} HTTP/2 is always performing better than HTTP/1.1 when downloading the data for pages.
 
 \subsection{Protocol Type}
 
@@ -429,46 +429,46 @@ REST is a text-based protocol, see \ref{sec:rest}. gRPC on the other hand is bin
 
 \subsection{Supported Formats}
 
-The REST protocol supports multiple formats for use (like JSON or XML), see \ref{sec:rest}. gRPC on the other hand is a binary format and only supports multiple IDL specification formats. While the gRPC protocol only supports binary communication, the rest-proxy created through the gRPC framework is able to support multiple non-binary formats (like JSON or XML). Said rest-proxy provides this functionality through the REST protocol and not gRPC.
+The REST protocol supports multiple formats for use (like JSON or XML), see \ref{sec:rest}. gRPC, on the other hand, is a binary format and only supports multiple IDL specification formats. While the gRPC protocol only supports binary communication, the rest-proxy created through the gRPC framework can support multiple non-binary formats (like JSON or XML). Said rest-proxy provides this functionality through the REST protocol and not gRPC.
 
 \subsection{Browser Support}
 
-As REST is using the URI and HTTP for communication it is possible to perform REST requests through the browser, even it some HTTP verbs may require additional plugins for use. In comparison to this gRPC is not supported through browsers, as they would require stub code created by gRPC server to achieve this.
+As REST uses the URI and HTTP for communication, it is possible to perform REST requests through the browser, even if some HTTP verbs may require additional plugins for use. Compared to this, gRPC is not supported through browsers, as they would require stub code created by the gRPC server to achieve this.
 
 \subsection{Caching}
 
-REST responses can be cached by proxy server \cite{wagh2012comparative}. Responses from a gRPC server on the other hand cannot be cached. Should caching on intermediary proxies be required, a rest-proxy would have to be used.
+REST responses can be cached by proxy server \cite{wagh2012comparative}. Responses from a gRPC server, on the other hand, cannot be cached. Should caching on intermediary proxies be required, a rest-proxy would have to be used.
 
 \subsection{Complexity of Interface Definition}
 
-REST itself uses the URI and HTTP verbs to define the API. It is thereby not required to have a design document, nor is there a fixed standard on how these mechanisms are used to define said API. This makes it possible to directly create a service API within any language, using the languages standard mechanisms.
+REST itself uses the URI and HTTP verbs to define the API. Therefore, it is not required to have a design document, nor is there a fixed standard on how these mechanisms are used to define said API. This makes it possible to directly create a service API within any language, using its standard mechanisms.
 
-When creating the gRPC interface on the other hand, an IDL document is to be written that formulates the interaction with the API. While requiring a developer to create an additional file containing the specification, said document can be written using standard text-editors and does not require specialized tools. gRPC achieves this through the use of Protocol Buffers as the default IDL, see section \ref{sec:grpc}.
+On the other hand, when creating the gRPC interface, an IDL document is to be written that formulates the interaction with the API. While requiring a developer to create an additional file containing the specification, said document can be written using standard text-editors and does not require specialized tools. gRPC achieves this by using Protocol Buffers as the default IDL, see section \ref{sec:grpc}.
 
 \subsection{Technology Dependence}
 
-Both protocols support multiple programming languages, see section \ref{sec:rest} and \cite{grpcmotiviation}. Furthermore they can be deployed on any web-server that supports the language used to implement the service.
+Both protocols support multiple programming languages, see section \ref{sec:rest} and \cite{grpcmotiviation}. Furthermore, they can be deployed on any web-server that supports the language used to implement the service.
 
 \subsection{Communication Model}
 
-REST assumes a point-to-point communication model but supports proxies as intermediaries \cite{wagh2012comparative}. gRPC on the other hand requires the client to open a connection directly with server. Use of a rest-proxy makes the actual client use the REST protocol instead of gRPC for communication and does therefore not support gRPC itself with proxy capabilities.
+REST assumes a point-to-point communication model but supports proxies as intermediaries \cite{wagh2012comparative}. gRPC, on the other hand, requires the client to open a connection directly with the server. Using a rest-proxy makes the actual client use the REST protocol instead of gRPC for communication and does not support gRPC itself with proxy capabilities.
 
 \subsection{Development Tools and Requirements}
 
-As mentioned in subsection \textit{Complexity of Interface Definition}, both protocols interfaces can be created using default text editors. The only tool requirements that may arise are tied to the programming language that is used to implement the API of a service.
+As mentioned in subsection \textit{Complexity of Interface Definition}, both protocols interfaces can be created using default text editors. The only tool requirements that may arise are tied to the programming language used to implement the API of a service.
 
 \subsection{Security}
 
-Both protocols do not define explicit security mechanisms. Security of transported information is instead provided through use of the HTTPS scheme.
+Both protocols do not define explicit security mechanisms. Security of transported information is instead provided through the use of the HTTPS scheme.
 
 \subsection{Microservices and gRPC}
 \label{sec:mgrpc}
 
-gRPC suffers the same problem as SOAP when analyzed for microservice compatibility. The protocol is a RPC framework and requires the client to use the stub created by the gRPC server. Therefore the client now has a dependency on the server service and may require changes when the server is changed. This goes against the loose coupling and independent deployment of microservices \cite{karmel2016nist}.
+gRPC suffers the same problem as SOAP when analyzed for microservice compatibility. The protocol is an RPC framework and requires the client to use the gRPC server's stub. Therefore the client now has a dependency on the server service and may require changes when the server is changed. This goes against the loose coupling, and independent deployment of microservices \cite{karmel2016nist}.
 
-Additionally, gRPC is a binary protocol and does not fully fit with the independent technology requirement of microservices \cite{karmel2016nist}. While it can be argued that it is possible to use the parsed messages in any programming language and that the IDL can be of different formats, the client is only provided with client code and not with the ability to retrieve the server information in different formats, which would be the actual requirement of microservice architectures.
+Additionally, gRPC is a binary protocol and does not entirely fit with the independent technology requirement of microservices \cite{karmel2016nist}. While it can be argued that it is possible to use the parsed messages in any programming language and that the IDL can be of different formats, the client is only provided with client code and not with the ability to retrieve the server information in different formats, which would be the actual requirement of microservice architectures.
 
-Based on these points it can be said that gRPC will not replace REST in microservice architectures in the near future. It is still possible to introduce gRPC functionality into certain services of the architecture, but this should only be done if a rest-proxy is additionally provided by the gRPC service. This way the architecture continues to be fully compatible with the microservice definition, but still offer the advantages of streaming requests and responses that gRPC has to the clients that require it.
+Based on these points, it can be said that gRPC will not replace REST in microservice architectures soon. It is still possible to introduce gRPC functionality into certain architecture services, but this should only be done if the gRPC service additionally provides a rest-proxy. This way, the architecture continues to be fully compatible with the microservice definition but still offers the advantages of streaming requests and responses that gRPC has to the clients that require it.
 
 \section{Conclusion}
 
